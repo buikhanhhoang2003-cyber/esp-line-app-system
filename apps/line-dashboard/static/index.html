@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Line Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <main>
+    <h1>Line Notify Dashboard</h1>
+    <p id="status">Loading token status...</p>
+
+    <form id="notify-form">
+      <label for="target-type">Send to</label>
+      <select id="target-type">
+        <option value="user">User (push)</option>
+        <option value="group">Group (push to group id)</option>
+        <option value="broadcast">Broadcast (all followers)</option>
+      </select>
+
+      <label for="target-id" id="target-label">User / Group ID</label>
+      <input id="target-id" placeholder="Enter User ID (U...) or Group ID (C...)" />
+
+      <label for="message">Message</label>
+      <textarea id="message" rows="4" placeholder="Type a message to send"></textarea>
+
+      <button type="submit">Send to LINE</button>
+
+      <div style="margin-top:12px">
+        <button type="button" id="toggle-custom" style="padding:6px 10px;border-radius:8px;border:1px solid #ddd;background:#fff;cursor:pointer">Custom settings</button>
+      </div>
+
+      <div id="custom-panel" style="display:none; margin-top:12px;">
+        <small>Optional overrides (if left empty the server token/settings are used):</small>
+        <label for="custom-user-id">Custom User ID</label>
+        <input id="custom-user-id" placeholder="Optional: override user id (U...)" />
+
+        <label for="custom-group-id">Custom Group ID</label>
+        <input id="custom-group-id" placeholder="Optional: override group id (C...)" />
+
+        <label for="custom-token">Channel Token</label>
+        <input id="custom-token" placeholder="Optional: override channel access token" />
+      </div>
+    </form>
+
+    <div id="result" aria-live="polite"></div>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

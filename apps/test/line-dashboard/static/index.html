@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LINE MSG CTRL</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-left">
+    <div class="header-logo">⚡</div>
+    <div>
+      <div class="header-title">LINE MSG CTRL</div>
+      <div class="header-sub">MESSAGING API DASHBOARD</div>
+    </div>
+  </div>
+  <div id="statusBadge" class="status-badge offline">
+    <span class="status-dot"></span>
+    <span id="statusText">OFFLINE</span>
+  </div>
+</header>
+
+<!-- Body -->
+<div class="main">
+  <!-- LEFT COLUMN -->
+  <div class="col">
+
+    <!-- Connection Card -->
+    <div class="card">
+      <div class="card-header">
+        <span style="color: var(--purple)">⚙</span>
+        <span class="card-header-label">Connection</span>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <label class="label">Channel Access Token</label>
+          <div class="token-row">
+            <input id="tokenInput" type="password" class="input" placeholder="Paste your token here...">
+            <button class="token-toggle" onclick="toggleToken()">SHOW</button>
+          </div>
+        </div>
+        <button id="connectBtn" class="btn btn-primary btn-full" onclick="connect()">
+          ⚡ CONNECT
+        </button>
+        <div id="botInfoBox" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- Compose Card -->
+    <div class="card">
+      <div class="card-header">
+        <span style="color: var(--accent)">✉</span>
+        <span class="card-header-label">Compose Message</span>
+      </div>
+      <div class="card-body">
+
+        <!-- Mode Toggle -->
+        <div class="mode-toggle">
+          <button id="modePush" class="mode-btn active" onclick="setMode('push')">👤 PUSH</button>
+          <button id="modeBcast" class="mode-btn" onclick="setMode('broadcast')">📡 BROADCAST</button>
+        </div>
+
+        <!-- User ID (push only) -->
+        <div id="userIdField" class="field">
+          <label class="label">User ID</label>
+          <input id="userIdInput" class="input" placeholder="U285aec8b61a76895...">
+        </div>
+
+        <!-- Broadcast Warning -->
+        <div id="bcastWarn" class="warn-bar" style="display:none">
+          ⚠ Broadcast sends to ALL followers
+        </div>
+
+        <!-- Message -->
+        <div class="field">
+          <label class="label">Message</label>
+          <textarea id="msgInput" class="textarea" placeholder="Type your message..."></textarea>
+        </div>
+
+        <!-- Image URL -->
+        <div class="field">
+          <label class="label">Image URL (optional)</label>
+          <input id="imageInput" class="input" placeholder="https://example.com/image.jpg" oninput="previewImage()">
+        </div>
+        <div id="imgPreviewBox" style="display:none; margin-bottom:12px">
+          <img id="imgPreview" class="img-preview">
+        </div>
+
+        <!-- Send Button -->
+        <button id="sendBtn" class="btn btn-primary btn-full" onclick="sendMessage()" disabled>
+          ✉ SEND PUSH
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="col">
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-label">Total Sent</div>
+        <div id="statTotal" class="stat-value" style="color: var(--accent)">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Success</div>
+        <div id="statSuccess" class="stat-value" style="color: var(--success)">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Failed</div>
+        <div id="statFail" class="stat-value" style="color: var(--danger)">0</div>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="card" style="flex:1; display:flex; flex-direction:column">
+      <div class="card-header">
+        <span style="color: var(--warning)">🕐</span>
+        <span class="card-header-label">Message History</span>
+      </div>
+      <div class="card-body" style="flex:1; display:flex; flex-direction:column">
+        <div class="history-actions">
+          <button id="clearBtn" class="btn btn-danger" onclick="clearHistory()" style="display:none; padding:5px 10px; font-size:11px">
+            🗑 CLEAR
+          </button>
+        </div>
+        <div id="historyList" class="history-list">
+          <div class="history-empty">No messages sent yet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  LINE MSG CTRL v1.0 · ESP32-STYLE DASHBOARD · BUILT FOR EXPANSION
+</footer>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
