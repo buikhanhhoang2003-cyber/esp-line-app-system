@@ -1,13 +1,37 @@
 Line Dashboard
 ===============
 
+Deploy on Render
+----------------
+
+This repository includes a Render Blueprint file at the repository root:
+
+- `render.yaml`
+
+The web service is configured to run from `apps/line-dashboard` with:
+
+- Build command: `pip install -r requirements.txt`
+- Start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+
+Quick steps:
+
+1. Push this repo to GitHub.
+2. In Render, click **New +** -> **Blueprint** and connect the repo.
+3. Select the generated service `line-dashboard`.
+4. Set environment variable `LINE_CHANNEL_ACCESS_TOKEN` in Render.
+5. Deploy and open the service URL.
+
+Health check endpoint:
+
+- `GET /healthz`
+
 Quick start:
 
 1. Copy the environment template:
 
 ```bash
 cp .env.example .env
-# Edit .env and set LINE_NOTIFY_TOKEN
+# Edit .env and set LINE_CHANNEL_ACCESS_TOKEN
 ```
 
 2. Create a virtualenv and install dependencies:
@@ -27,7 +51,7 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 4. Open the dashboard at `http://localhost:8000/`
 
 Notes:
-- The UI calls `/api/notify` which requires a valid `LINE_NOTIFY_TOKEN` in `.env`.
+- The UI calls `/api/notify` which requires a valid `LINE_CHANNEL_ACCESS_TOKEN` in `.env`.
 - Use `curl` or Postman to test the API endpoint directly:
 
 ```bash
@@ -43,3 +67,5 @@ Additional LINE Messaging API endpoints (server-side)
 	- Body JSON: `{"message":"Announcement","image":"https://...","sticker":["1","1"],"token":"OPTIONAL_OVERRIDE"}`
 
 Note: These endpoints use the LINE Messaging API and require a `LINE_CHANNEL_ACCESS_TOKEN` to be set (in `.env` or provided in the request body as `token`).
+
+Compatibility note: `LINE_NOTIFY_TOKEN` is still accepted as a legacy fallback, but `LINE_CHANNEL_ACCESS_TOKEN` is recommended.
