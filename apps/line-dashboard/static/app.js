@@ -48,8 +48,8 @@ async function fetchStatus() {
     const res = await fetch("/api/status");
     const data = await res.json();
     statusEl.textContent = data.tokenConfigured
-      ? "LINE Notify token is configured. Ready to send messages."
-      : "LINE Notify token is not configured. Copy .env.example to .env and set LINE_NOTIFY_TOKEN.";
+      ? "LINE token is configured. Ready to send messages."
+      : "LINE token is not configured. Set LINE_CHANNEL_ACCESS_TOKEN (or LINE_NOTIFY_TOKEN for legacy setup).";
   } catch (error) {
     statusEl.textContent = "Unable to read status. Check server logs.";
   }
