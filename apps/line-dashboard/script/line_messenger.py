@@ -1,22 +1,17 @@
-"""Lightweight LINE Messaging API helper for server use.
-
-This module is adapted from the CLI script in `apps/test-send-msg`.
-It provides `push_message` and `broadcast_message` functions which accept
-an optional `token` argument for runtime override (useful for the API).
-"""
-
+import argparse
 import json
 import os
+import sys
+from typing import Dict, List, Optional
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
-from typing import List, Dict, Optional
-
-BASE_URL = "https://api.line.me/v2/bot/message"
-PUSH_URL = f"{BASE_URL}/push"
-BROADCAST_URL = f"{BASE_URL}/broadcast"
 
 
-def load_env(filepath: str = ".env") -> None:
+# ──────────────────────────────────────────────
+# Load .env file (no dependencies needed)
+# ──────────────────────────────────────────────
+def load_env(filepath=".env"):
+    """Load key=value pairs from a .env file into os.environ."""
     if not os.path.exists(filepath):
         return
     with open(filepath, "r") as f:
@@ -29,13 +24,27 @@ def load_env(filepath: str = ".env") -> None:
             key, value = line.split("=", 1)
             key = key.strip()
             value = value.strip()
+            # Remove surrounding quotes if present
             if len(value) >= 2 and value[0] == value[-1] and value[0] in ('"', "'"):
                 value = value[1:-1]
             os.environ.setdefault(key, value)
 
 
-# Try to load a .env in the package directory if present
-load_env(os.path.join(os.path.dirname(__file__), "..", ".env"))
+load_env()
+
+# ──────────────────────────────────────────────
+# CONFIGURATION
+#   Priority: --token flag > .env file > env var > script default
+# ──────────────────────────────────────────────
+CHANNEL_ACCESS_TOKEN = os.environ.get("LINE_CHANNEL_ACCESS_TOKEN", "YOUR_CHANNEL_ACCESS_TOKEN_HERE")
+DEFAULT_GROUP_ID = os.environ.get("LINE_GROUP_ID", "")
+
+# ──────────────────────────────────────────────
+# API Endpoints
+# ──────────────────────────────────────────────
+BASE_URL = "https://api.line.me/v2/bot/message"
+PUSH_URL = f"{BASE_URL}/push"
+BROADCAST_URL = f"{BASE_URL}/broadcast"
 
 
 def _send_request(url: str, payload: Dict, token: str) -> Dict:
