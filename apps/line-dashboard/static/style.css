@@ -7,18 +7,18 @@ body {
 
 main {
   max-width: 640px;
-  margin: 64px auto;
-  padding: 24px;
-  background: #ffffff;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  background: linear-gradient(145deg, #e6f8ef 0%, #f8fcff 50%, #eef4ff 100%);
+  color: #1e2d3d;
   border-radius: 20px;
   box-shadow: 0 18px 60px rgba(31, 49, 96, 0.12);
 }
-
+  max-width: 760px;
 h1 {
-  margin-top: 0;
+  padding: 28px;
   font-size: 2rem;
 }
-
+  box-shadow: 0 20px 60px rgba(30, 65, 105, 0.14);
 p {
   margin: 0 0 24px;
   line-height: 1.6;
@@ -30,24 +30,122 @@ label {
   font-weight: 600;
 }
 
+
+.status-text {
+  color: #2b4867;
+}
+
+.sensor-panel {
+  margin-bottom: 26px;
+  padding: 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f2fbf5 0%, #f4fbff 100%);
+  border: 1px solid #d6e8df;
+}
+
+.sensor-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.sensor-panel-head h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.sensor-card {
+  margin: 0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: #11293f;
+}
+
+.sensor-temp {
+  background: #ffe7d1;
+}
+
+.sensor-humid {
+  background: #dff2ff;
+}
+
+.sensor-soil {
+  background: #e2f4dd;
+}
+
+.sensor-label {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  opacity: 0.78;
+}
+
+.sensor-value {
+  margin: 2px 0 0;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.sensor-unit {
+  font-size: 0.9rem;
+  font-weight: 700;
+  opacity: 0.78;
+}
 textarea {
   width: 100%;
   border: 1px solid #d8dee5;
   border-radius: 14px;
   padding: 16px;
   font-size: 1rem;
+
+input,
+select,
   resize: vertical;
 }
 
 button {
   margin-top: 16px;
   padding: 14px 20px;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+textarea {
   border: none;
   border-radius: 14px;
   background: #00c300;
   color: #ffffff;
   font-weight: 700;
   cursor: pointer;
+}
+
+.secondary-btn {
+  margin-top: 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #c7d8cb;
+  background: #ffffff;
+  color: #24425d;
+}
+
+.custom-action-row {
+  margin-top: 12px;
 }
 
 button:disabled {
@@ -63,16 +161,39 @@ button:disabled {
 /* Custom settings panel */
 #custom-panel {
   border: 1px solid #e6e9f0;
-  padding: 10px;
+  padding: 12px;
   border-radius: 10px;
-  margin-top: 8px;
+  margin-top: 12px;
   background: #fbfdff;
 }
 
+#custom-panel.is-hidden {
+  display: none;
+}
+
 #custom-panel input {
-  width: 100%;
-  margin-bottom: 8px;
-  padding: 8px 10px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
   border-radius: 8px;
   border: 1px solid #e6e9f0;
+}
+
+@media (max-width: 700px) {
+  main {
+    margin: 18px;
+    padding: 18px;
+  }
+
+  .sensor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .sensor-panel-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
