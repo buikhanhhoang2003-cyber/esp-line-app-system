@@ -21,7 +21,13 @@ from script.line_messenger import (
 BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
 
-LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN", "")
+LINE_CHANNEL_ACCESS_TOKEN = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", "").strip()
+LINE_NOTIFY_TOKEN = os.getenv("LINE_NOTIFY_TOKEN", "").strip()
+
+# Backward compatibility for older setups that still use LINE_NOTIFY_TOKEN.
+if LINE_NOTIFY_TOKEN and not LINE_CHANNEL_ACCESS_TOKEN:
+    os.environ["LINE_CHANNEL_ACCESS_TOKEN"] = LINE_NOTIFY_TOKEN
+    LINE_CHANNEL_ACCESS_TOKEN = LINE_NOTIFY_TOKEN
 
 app = FastAPI(title="Line Dashboard")
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
@@ -34,7 +40,12 @@ def index():
 
 @app.get("/api/status")
 def status():
-    return {"tokenConfigured": bool(LINE_NOTIFY_TOKEN)}
+    return {"tokenConfigured": bool(LINE_CHANNEL_ACCESS_TOKEN)}
+
+
+@app.get("/healthz")
+def healthz():
+    return {"ok": True}
 
 
 @app.post("/api/notify")
