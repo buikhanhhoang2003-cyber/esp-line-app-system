@@ -9,7 +9,29 @@
 <body>
   <main>
     <h1>Line Notify Dashboard</h1>
-    <p id="status">Loading token status...</p>
+    <p id="status" class="status-text">Loading token status...</p>
+
+    <section class="sensor-panel" aria-labelledby="sensor-title">
+      <div class="sensor-panel-head">
+        <h2 id="sensor-title">Sensor Sample</h2>
+        <button type="button" id="refresh-sample" class="secondary-btn">Refresh sample</button>
+      </div>
+      <div class="sensor-grid">
+        <article class="sensor-card sensor-temp">
+          <p class="sensor-label">Temperature</p>
+          <p class="sensor-value"><span id="sample-temp">--</span><span class="sensor-unit">&deg;C</span></p>
+        </article>
+        <article class="sensor-card sensor-humid">
+          <p class="sensor-label">Humidity</p>
+          <p class="sensor-value"><span id="sample-humidity">--</span><span class="sensor-unit">%</span></p>
+        </article>
+        <article class="sensor-card sensor-soil">
+          <p class="sensor-label">Soil Moisture</p>
+          <p class="sensor-value"><span id="sample-soil">--</span><span class="sensor-unit">%</span></p>
+        </article>
+      </div>
+      <button type="button" id="use-sample" class="secondary-btn">Use this sample in message</button>
+    </section>
 
     <form id="notify-form">
       <label for="target-type">Send to</label>
@@ -27,11 +49,11 @@
 
       <button type="submit">Send to LINE</button>
 
-      <div style="margin-top:12px">
-        <button type="button" id="toggle-custom" style="padding:6px 10px;border-radius:8px;border:1px solid #ddd;background:#fff;cursor:pointer">Custom settings</button>
+      <div class="custom-action-row">
+        <button type="button" id="toggle-custom" class="secondary-btn">Custom settings</button>
       </div>
 
-      <div id="custom-panel" style="display:none; margin-top:12px;">
+      <div id="custom-panel" class="is-hidden">
         <small>Optional overrides (if left empty the server token/settings are used):</small>
         <label for="custom-user-id">Custom User ID</label>
         <input id="custom-user-id" placeholder="Optional: override user id (U...)" />
