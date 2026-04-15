@@ -10,6 +10,38 @@ const customPanel = document.getElementById("custom-panel");
 const customUserEl = document.getElementById("custom-user-id");
 const customGroupEl = document.getElementById("custom-group-id");
 const customTokenEl = document.getElementById("custom-token");
+const sampleTempEl = document.getElementById("sample-temp");
+const sampleHumidityEl = document.getElementById("sample-humidity");
+const sampleSoilEl = document.getElementById("sample-soil");
+const refreshSampleBtn = document.getElementById("refresh-sample");
+const useSampleBtn = document.getElementById("use-sample");
+
+let sampleReading = {
+  temperature: 0,
+  humidity: 0,
+  soilMoisture: 0,
+};
+
+function generateSampleReading() {
+  sampleReading.temperature = +(23 + Math.random() * 12).toFixed(1);
+  sampleReading.humidity = Math.round(45 + Math.random() * 40);
+  sampleReading.soilMoisture = Math.round(25 + Math.random() * 60);
+}
+
+function renderSampleReading() {
+  sampleTempEl.textContent = sampleReading.temperature.toFixed(1);
+  sampleHumidityEl.textContent = String(sampleReading.humidity);
+  sampleSoilEl.textContent = String(sampleReading.soilMoisture);
+}
+
+function buildSampleMessage() {
+  return [
+    "Sample Sensor Update",
+    `Temperature: ${sampleReading.temperature.toFixed(1)}C`,
+    `Humidity: ${sampleReading.humidity}%`,
+    `Soil Moisture: ${sampleReading.soilMoisture}%`,
+  ].join("\n");
+}
 
 async function fetchStatus() {
   try {
@@ -97,11 +129,11 @@ function updateTargetField() {
 
 // Toggle custom panel
 toggleCustomBtn.addEventListener("click", () => {
-  if (customPanel.style.display === "none") {
-    customPanel.style.display = "block";
+  if (customPanel.classList.contains("is-hidden")) {
+    customPanel.classList.remove("is-hidden");
     toggleCustomBtn.textContent = "Hide custom settings";
   } else {
-    customPanel.style.display = "none";
+    customPanel.classList.add("is-hidden");
     toggleCustomBtn.textContent = "Custom settings";
   }
 });
@@ -109,18 +141,17 @@ toggleCustomBtn.addEventListener("click", () => {
 targetTypeEl.addEventListener("change", updateTargetField);
 updateTargetField();
 
-// Show/hide target id depending on selected type
-function updateTargetField() {
-  if (targetTypeEl.value === "broadcast") {
-    targetIdEl.style.display = "none";
-    targetLabel.style.display = "none";
-  } else {
-    targetIdEl.style.display = "block";
-    targetLabel.style.display = "block";
-  }
-}
+refreshSampleBtn.addEventListener("click", () => {
+  generateSampleReading();
+  renderSampleReading();
+});
 
-targetTypeEl.addEventListener("change", updateTargetField);
-updateTargetField();
+useSampleBtn.addEventListener("click", () => {
+  messageInput.value = buildSampleMessage();
+  messageInput.focus();
+});
+
+generateSampleReading();
+renderSampleReading();
 
 fetchStatus();
