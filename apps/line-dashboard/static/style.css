@@ -1,24 +1,24 @@
 body {
   margin: 0;
-  font-family: Inter, system-ui, sans-serif;
-  background: #f4f6fb;
-  color: #202a44;
-}
-
-main {
-  max-width: 640px;
   font-family: "Source Sans 3", "Segoe UI", sans-serif;
   background: linear-gradient(145deg, #e6f8ef 0%, #f8fcff 50%, #eef4ff 100%);
   color: #1e2d3d;
-  border-radius: 20px;
-  box-shadow: 0 18px 60px rgba(31, 49, 96, 0.12);
 }
+
+main {
   max-width: 760px;
-h1 {
+  margin: 64px auto;
   padding: 28px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(30, 65, 105, 0.14);
+}
+
+h1 {
+  margin: 0;
   font-size: 2rem;
 }
-  box-shadow: 0 20px 60px rgba(30, 65, 105, 0.14);
+
 p {
   margin: 0 0 24px;
   line-height: 1.6;
@@ -29,7 +29,6 @@ label {
   margin-bottom: 12px;
   font-weight: 600;
 }
-
 
 .status-text {
   color: #2b4867;
@@ -106,27 +105,27 @@ label {
   font-weight: 700;
   opacity: 0.78;
 }
+
+input,
+select,
 textarea {
   width: 100%;
   border: 1px solid #d8dee5;
   border-radius: 14px;
   padding: 16px;
   font-size: 1rem;
-
-input,
-select,
-  resize: vertical;
-}
-
-button {
-  margin-top: 16px;
-  padding: 14px 20px;
   box-sizing: border-box;
   margin-bottom: 12px;
   background: #fff;
 }
 
 textarea {
+  resize: vertical;
+}
+
+button {
+  margin-top: 16px;
+  padding: 14px 20px;
   border: none;
   border-radius: 14px;
   background: #00c300;
@@ -158,7 +157,6 @@ button:disabled {
   min-height: 24px;
 }
 
-/* Custom settings panel */
 #custom-panel {
   border: 1px solid #e6e9f0;
   padding: 12px;
