@@ -1,0 +1,12 @@
+# ─────────────────────────────────────
+# FASTAPI CORE
+# ─────────────────────────────────────
+fastapi
+uvicorn[standard]
+
+python-dotenv
+pydantic
+pydantic-settings
+httpx
+line-bot-sdk
+pymongo

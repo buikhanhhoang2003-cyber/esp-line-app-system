@@ -1,3 +1,0 @@
-[submodule "apps/line-dashboard/firmware-esp/esp-idf"]
-	path = apps/line-dashboard/firmware-esp/esp-idf
-	url = https://github.com/espressif/esp-idf.git
