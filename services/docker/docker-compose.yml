@@ -1,0 +1,67 @@
+# docker/docker-compose.yml
+version: '3.8'
+
+services:
+  line-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: line-messaging-api
+    ports:
+      - "8000:8000"
+    environment:
+      - LINE_CHANNEL_ACCESS_TOKEN=${LINE_CHANNEL_ACCESS_TOKEN}
+      - LINE_GROUP_ID=${LINE_GROUP_ID}
+      - ENVIRONMENT=production
+      - LOG_LEVEL=info
+    volumes:
+      - ./logs:/app/logs
+      - ./config:/app/config:ro
+    restart: unless-stopped
+    networks:
+      - line-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Redis for rate limiting
+  redis:
+    image: redis:7-alpine
+    container_name: line-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    networks:
+      - line-network
+    profiles:
+      - with-redis
+
+  # Optional: Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: line-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - line-api
+    restart: unless-stopped
+    networks:
+      - line-network
+    profiles:
+      - with-nginx
+
+networks:
+  line-network:
+    driver: bridge
+
+volumes:
+  redis-data:

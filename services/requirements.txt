@@ -1,12 +1,25 @@
-# ─────────────────────────────────────
-# FASTAPI CORE
-# ─────────────────────────────────────
-fastapi
-uvicorn[standard]
+# requirements.txt
+# Core dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+python-dotenv==1.0.0
 
-python-dotenv
-pydantic
-pydantic-settings
-httpx
-line-bot-sdk
-pymongo
+# HTTP client
+httpx==0.25.1
+requests==2.31.0
+
+# Database (optional)
+# sqlalchemy==2.0.23
+# asyncpg==0.29.0
+# redis==5.0.1
+
+# Monitoring and logging
+python-json-logger==2.0.7
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# Utilities
+python-multipart==0.0.6
